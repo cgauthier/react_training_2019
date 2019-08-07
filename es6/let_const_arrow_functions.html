@@ -1,0 +1,79 @@
+<html>
+    <head>
+        <title>ES6</title>
+        <script>
+            window.onload = init;
+
+
+            function init() {
+
+                // ************************************************
+                // let and const
+                // ************************************************
+
+                // use let to keep within scope that can't be hoisted
+                console.log("let");
+                let a = 1;
+                console.log("Value of a before block is: " + a);
+
+                {
+                    let a = 2;
+                    console.log("Value of a in block is: " + a);
+                }
+
+                console.log("Value of a after block is: " + a);
+
+
+                // use const as a constant
+                console.log("const");
+                const penny = 1;
+                console.log("Value of Penny is: " + penny);
+                // if you try this, it will cause a TypeError: Assignment to constant variable
+                // penny = 2;
+                // console.log("Value of Penny is: " + penny);
+
+                console.log("\n");
+                // ************************************************
+                // arrow functions
+                // ************************************************
+
+                console.log("arrow functions");
+
+                // storing an arrow function in a const
+                // this keyword in an arrow, keeps the context
+                const myFnc = () => {
+                    console.log("myFnc");
+                }
+                myFnc();
+
+                // passing a parameter
+                console.log("\n");
+                // we could omit the parathesis for only one single argument
+                // don't do it.
+                const printMyName = (name, age) => {
+                    console.log(name + " " + age);
+                }
+                printMyName("Claude", 53);
+
+                // for single statement, keep it short, no return, it is implicit
+                console.log("\n");
+                // we could omit the parathesis for only one single argument
+                // don't do it.
+                const multiply = (number) => number * 2;
+                console.log(multiply(4));
+
+
+            }
+
+
+
+        </script>
+    </head>
+    <body>
+        <h1>ES6</h1>
+        <div>Use the Debugger</div>
+        <h2>Let and Const</h2>
+        <h2>Arrow Functions</h2>
+    </body>
+
+</html>
