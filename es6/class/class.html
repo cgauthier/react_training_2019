@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <title>Classes IN JS</title>
+        <script>
+            window.onload = init;
+
+            function init() {
+
+                class Human {
+                    
+                    gender = '';
+
+                    constructor(g) {
+                        this.gender = (g) ? g: 'male';
+                    }
+
+                    printGender = () => {
+                        console.log(this.gender);
+                    }
+                }
+
+                class Person extends Human {
+
+                    name = '';
+
+                    constructor(n, g) {
+                        super(g);
+                        this.name = (n) ? n : "generic";
+                    }
+                    
+                    printMyName = () => {
+                        console.log(this.name);
+                    }
+                }
+
+                const person = new Person();
+                person.printMyName();
+                person.printGender();
+
+                console.log("\n");
+
+                const person2 = new Person("Claude");
+                person2.printMyName();
+                person2.printGender();
+
+                console.log("\n");
+
+                const person3 = new Person("Nicole", "female");
+                person3.printMyName();
+                person3.printGender();                
+            }
+    
+        </script>
+    </head>
+    <body>
+        <h1>Classes in JS</h1>
+        <p>Use Debugger</p>
+    </body>
+</html>

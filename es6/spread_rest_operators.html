@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>Spread and Rest Operators</title>
+        <script>
+            window.onload = init;
+
+            function init() {
+                // ... <-- spread or rest operator
+                // it will either pull from or merge to array/object 
+                
+                // spread is used to pull either array or object elements
+                
+                console.log("Spread operator where oldArray will be included in newArray");
+                const oldArray = [7, 8, 9];
+                console.log(oldArray.toString());
+                const newArray = [...oldArray, 1, 2];
+                console.log("newArray = " + newArray.toString());
+
+                console.log("\n");
+                console.log("Spread operator where oldObj will be included in newObj - See in Debugger");
+                console.log("\n");
+                const oldObj = {
+                    foo: "bar"
+                }
+                const newObj = {
+                    ...oldObj,
+                    name: "Claude"
+                }
+                // debugger;
+
+                // rest demo used in a function signature
+                // args will be an array (automatic)
+                function addStuffToSort(...args) {
+
+                    console.log((args.sort()).toString());
+
+                }
+
+                console.log("Rest Operator which will create an array automatically, the addStuffToSort will automatically sort the data passed");
+
+                addStuffToSort("five", "one", "two", "three", "four");
+                addStuffToSort(2, 4, 10, 6, 7, 9);
+
+                // use the rest operator as a quick way to create a real copy of either array or object since by default we have by reference, with the rest operator we create real copy         
+
+            }
+    
+        </script>
+    </head>
+    <body>
+        <h1>Spread and Rest Operators</h1>
+        <p>Use Debugger</p>
+    </body>
+</html>
