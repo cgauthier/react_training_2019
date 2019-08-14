@@ -27,7 +27,8 @@ class App extends Component {
       name: "Schnookums",
       age: 7,
       children: "I'm a dog!"
-    }]
+    }],
+    showPersons: false
   }
 
   // never manipulate the special state object directly
@@ -65,6 +66,22 @@ class App extends Component {
   
   }
 
+  togglePersonsHandler = (event) => {
+    let newState = {
+      ...this.state
+    }
+    newState.showPersons = !newState.showPersons;
+    this.setState(newState);
+  }
+
+  deletePersonHandler = (personIndex) => {
+    // always update the state immutably as best practice
+    const persons = this.state.persons.slice(); // creates an implicit copy of the entire array.
+    // or const persons = [...this.state.persons]; // spread operator
+    persons.splice(personIndex, 1);
+    this.setState({persons: persons});
+  }
+
   render() {
 
     const style = {
@@ -75,6 +92,28 @@ class App extends Component {
       cursor: "pointer"
     };
 
+    let persons = null;
+
+    if(this.state.showPersons) {
+      persons = (
+        <div> 
+          {this.state.persons.map((person, index) => {
+            if(person.children) {
+              return <Person 
+                click={() => this.deletePersonHandler(index)}
+                name={person.name} 
+                age={person.age}>{person.children}</Person>
+            } else {
+              return <Person 
+              click={() => this.deletePersonHandler(index)}
+                name={person.name} 
+                age={person.age}/>
+            }
+          })}
+        </div>
+      )
+    }
+
     return (
       <div className="App">
         <header className="App-header">
@@ -82,23 +121,30 @@ class App extends Component {
           <p>This is really working!</p>
           <button 
             style={style}
-            onClick={() => this.switchNameHandler("Freak!")}>Switch Name</button>
-          <Person 
-            name={this.state.persons[0].name} 
-            age={this.state.persons[0].age} />
-          <Person 
-            name={this.state.persons[1].name} 
-            age={this.state.persons[1].age} 
-            change={this.nameChangeHandler}
-            click={this.switchNameHandler.bind(this, "FooBar!")}/>
-          <Person 
-            name={this.state.persons[2].name} 
-            age={this.state.persons[2].age}>I'm a dog!</Person>
+            onClick={this.togglePersonsHandler}>Toggle Persons List</button>
+          {
+            this.state.showPersons ? persons : null
+          }
         </header>
       </div>
     );
   
     // better to use .bind than the arrow function to pass data using methods
+
+    // not the most efficient way to toggle display or use conditional logic
+    /* {(this.state.showPersons) ? <div>
+        <Person 
+          name={this.state.persons[0].name} 
+          age={this.state.persons[0].age} />
+        <Person 
+          name={this.state.persons[1].name} 
+          age={this.state.persons[1].age} 
+          change={this.nameChangeHandler}
+          click={this.switchNameHandler.bind(this, "FooBar!")}/>
+        <Person 
+          name={this.state.persons[2].name} 
+          age={this.state.persons[2].age}>I'm a dog!</Person>            
+      </div> : ""} */
 
   }
 }
