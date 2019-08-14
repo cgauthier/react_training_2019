@@ -18,12 +18,15 @@ class App extends Component {
   
   state = {
     persons: [{
+      id: "person_1",
       name: "Claude",
       age: 53
     }, {
+      id: "person_2",
       name: "Nicole",
       age: 40
     }, {
+      id: "person_3",
       name: "Schnookums",
       age: 7,
       children: "I'm a dog!"
@@ -49,20 +52,25 @@ class App extends Component {
     )
   }
 
-  nameChangeHandler = (event) => {
+  nameChangeHandler = (event, person) => {
 
-    this.setState( {persons: [{
-        name: "Nicole",
-        age: 40
-      }, {
-        name: event.target.value, // basic JS 101
-        age: 53
-      }, {
-        name: "Schnookums",
-        age: 7,
-        children: "I'm a dog!"
-      }]} 
-    );
+    const personIndex = this.state.persons.findIndex((p) => {
+      return p.id === person.id;
+    });
+
+    const personConst = {
+      ...this.state.persons[personIndex]
+    }
+
+    // alternate way
+    // const personConst = Object.assign({}, this.state.persons[personIndex]);
+
+    personConst.name = event.target.value;
+
+    const persons = [...this.state.persons];
+    persons[personIndex] = personConst;
+
+    this.setState( {persons: persons});
   
   }
 
@@ -74,12 +82,18 @@ class App extends Component {
     this.setState(newState);
   }
 
-  deletePersonHandler = (personIndex) => {
-    // always update the state immutably as best practice
-    const persons = this.state.persons.slice(); // creates an implicit copy of the entire array.
-    // or const persons = [...this.state.persons]; // spread operator
-    persons.splice(personIndex, 1);
-    this.setState({persons: persons});
+  // to deal with the change event
+  // if the target of the click is of type INPUT then we must not update the state.
+  // of course, not all targets have type....
+  deletePersonHandler = (event, personIndex) => {
+    console.log(event.target.type);
+    if(event.target.type && event.target.type.toLowerCase() !== "text") {
+      // always update the state immutably as best practice
+      const persons = this.state.persons.slice(); // creates an implicit copy of the entire array.
+      // or const persons = [...this.state.persons]; // spread operator
+      persons.splice(personIndex, 1);
+      this.setState({persons: persons});
+    }
   }
 
   render() {
@@ -94,18 +108,26 @@ class App extends Component {
 
     let persons = null;
 
+
+    // adding key allows react to compare what was with what's coming in its virtual DOM
+    // to ensure it only modifies what changed, making it more efficient
+    // key should be unique
     if(this.state.showPersons) {
       persons = (
         <div> 
           {this.state.persons.map((person, index) => {
             if(person.children) {
               return <Person 
-                click={() => this.deletePersonHandler(index)}
+                click={(event) => this.deletePersonHandler(event, index)}
+                key={person.id}
                 name={person.name} 
+                changed={(event) => this.nameChangeHandler(event, person)}
                 age={person.age}>{person.children}</Person>
             } else {
               return <Person 
-              click={() => this.deletePersonHandler(index)}
+                click={(event) => this.deletePersonHandler(event, index)}
+                key={person.id}
+                changed={(event) => this.nameChangeHandler(event, person)}
                 name={person.name} 
                 age={person.age}/>
             }
@@ -123,7 +145,8 @@ class App extends Component {
             style={style}
             onClick={this.togglePersonsHandler}>Toggle Persons List</button>
           {
-            this.state.showPersons ? persons : null
+            // this.state.showPersons ? persons : null
+            persons
           }
         </header>
       </div>
