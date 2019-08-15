@@ -7,6 +7,11 @@
 
 import React, { Component } from 'react';
 import './App.css';
+// because Radium is installed
+// we can support pseudo classes
+// note there are others such as Aphrodite, Emotion..
+// https://blog.logrocket.com/the-best-react-inline-style-libraries-comparing-radium-aphrodite-emotion-849ef148c473/
+import Radium,  {StyleRoot} from 'radium'; // for media queries, animation, etc.. 
 import Person from './Person/Person';
 
 
@@ -87,7 +92,7 @@ class App extends Component {
   // of course, not all targets have type....
   deletePersonHandler = (event, personIndex) => {
     console.log(event.target.type);
-    if(event.target.type && event.target.type.toLowerCase() !== "text") {
+    if(event.target.type === undefined) {
       // always update the state immutably as best practice
       const persons = this.state.persons.slice(); // creates an implicit copy of the entire array.
       // or const persons = [...this.state.persons]; // spread operator
@@ -98,16 +103,23 @@ class App extends Component {
 
   render() {
 
+    // because Radium is installed
+    // we can support pseudo classes like :hover, etc.
     const style = {
       backgroundColor: "white",
       font: "inherit",
       border: "1px solid blue",
       padding: "8px",
-      cursor: "pointer"
+      color: "white",
+      fontSize: "bold",
+      cursor: "pointer",
+      ":hover": {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     };
 
     let persons = null;
-
 
     // adding key allows react to compare what was with what's coming in its virtual DOM
     // to ensure it only modifies what changed, making it more efficient
@@ -134,22 +146,53 @@ class App extends Component {
           })}
         </div>
       )
+      style.backgroundColor = "red";
+    // because Radium is installed
+    // we can support pseudo classes like :hover, etc.
+    style[":hover"] = {
+        backgroundColor: 'lightred',
+        color: 'black'
+      }
+    } else {
+      style.backgroundColor = "green";
     }
 
+    const classes = [];
+
+    switch(this.state.persons.length) {
+
+        case 1:
+          classes.push('red');
+          classes.push("bold");
+        break;  
+
+        case 2:
+          classes.push("red");
+          
+        break;
+        
+        default:
+        break;
+    }
+
+    console.log(classes.join(" "));
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1>Hi, I'm a React App</h1>
-          <p>This is really working!</p>
-          <button 
-            style={style}
-            onClick={this.togglePersonsHandler}>Toggle Persons List</button>
-          {
-            // this.state.showPersons ? persons : null
-            persons
-          }
-        </header>
-      </div>
+      <StyleRoot>
+        <div className="App">
+          <header className="App-header">
+            <h1>Hi, I'm a React App</h1>
+            <p className={classes.join(' ')}>This is really working!</p>
+            <button 
+              style={style}
+              onClick={this.togglePersonsHandler}>Toggle Persons List</button>
+            {
+              // this.state.showPersons ? persons : null
+              persons
+            }
+          </header>
+        </div>
+      </StyleRoot>
     );
   
     // better to use .bind than the arrow function to pass data using methods
@@ -172,7 +215,7 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Radium(App);
 
 // ******************************
 // End of classic React Way of working

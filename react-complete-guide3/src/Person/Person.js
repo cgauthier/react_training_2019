@@ -1,5 +1,6 @@
 import React from 'react';
 import './Person.css';
+import Radium from 'radium';
 
 // one way
 // function person() {
@@ -19,8 +20,15 @@ const person = (props) => {
     // anything inside 'tags' are props.children
     const withChildren = (props.children) ? <p>{props.children}</p> : null;
 
+    // Radium
+    const style = {
+        '@media (min-width: 500px)': {
+            width: '450px'
+        }
+    }
+
     return (
-        <div className="Person" onClick={props.click}>
+        <div className="Person" onClick={props.click} style={style}>
             <p>I'm {props.name} and I am {props.age} years old!</p>
             {withChildren}
             <input type="text" onChange={props.changed} defaultValue={props.name}/>
@@ -30,6 +38,6 @@ const person = (props) => {
 
 
 // follows the import/export JS paradigm.
-export default person;
+export default Radium(person);
 
 // dynamic content wrapped in {}
