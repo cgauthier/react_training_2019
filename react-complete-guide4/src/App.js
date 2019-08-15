@@ -1,14 +1,32 @@
 // create react app scaffolding isn't working exactly as it should
 // need to turn into ES6 syntax for App.js
+// more info on create-react-app
+// https://create-react-app.dev/docs/adding-custom-environment-variables
 
 // ******************************
 // classic React Way of working - Class Based Components
 // ******************************
 
 import React, { Component } from 'react';
-import './App.css';
-import Person from './Person/Person';
+// import './App.css';
 
+// CSS Modules 
+// must edit the webpack.config.js file
+// have to restart npm start to ensure this takes effects.
+// in 16.8
+/*
+{
+              test: cssRegex,
+              exclude: cssModuleRegex,
+              use: getStyleLoaders({
+                importLoaders: 1,
+                sourceMap: isEnvProduction && shouldUseSourceMap,
+                modules: true,
+                localIdentName: '[name]__[local]__[hash:base64:5]'
+              }),
+*/              
+import cls from './App.css';
+import Person from './Person/Person';
 
 class App extends Component {
 
@@ -98,8 +116,6 @@ class App extends Component {
 
   render() {
 
-    // because Radium is installed
-    // we can support pseudo classes like :hover, etc.
     const style = {
       backgroundColor: "white",
       font: "inherit",
@@ -138,8 +154,6 @@ class App extends Component {
         </div>
       )
       style.backgroundColor = "red";
-    // because Radium is installed
-    // we can support pseudo classes like :hover, etc.
     } else {
       style.backgroundColor = "green";
     }
@@ -149,12 +163,12 @@ class App extends Component {
     switch(this.state.persons.length) {
 
         case 1:
-          classes.push('red');
-          classes.push("bold");
+          classes.push(cls.red);
+          classes.push(cls.bold);
         break;  
 
         case 2:
-          classes.push("red");
+          classes.push(cls.red);
           
         break;
         
@@ -165,7 +179,7 @@ class App extends Component {
     console.log(classes.join(" "));
 
     return (
-        <div className="App">
+        <div className={cls.App}>
           <header className="App-header">
             <h1>Hi, I'm a React App</h1>
             <p className={classes.join(' ')}>This is really working!</p>
