@@ -127,7 +127,8 @@ class App extends Component {
     };
 
     let persons = null;
-
+    let btnClass = '';
+    
     // adding key allows react to compare what was with what's coming in its virtual DOM
     // to ensure it only modifies what changed, making it more efficient
     // key should be unique
@@ -152,29 +153,31 @@ class App extends Component {
             }
           })}
         </div>
-      )
-      style.backgroundColor = "red";
-    } else {
-      style.backgroundColor = "green";
-    }
+      );
+
+      btnClass = cls.red;
+      
+
+
+    } 
 
     const classes = [];
 
-    switch(this.state.persons.length) {
+    // switch(this.state.persons.length) {
 
-        case 1:
-          classes.push(cls.red);
-          classes.push(cls.bold);
-        break;  
+    //     case 1:
+    //       classes.push(cls.red);
+    //       classes.push(cls.bold);
+    //     break;  
 
-        case 2:
-          classes.push(cls.red);
+    //     case 2:
+    //       classes.push(cls.red);
           
-        break;
+    //     break;
         
-        default:
-        break;
-    }
+    //     default:
+    //     break;
+    // }
 
     console.log(classes.join(" "));
 
@@ -184,7 +187,7 @@ class App extends Component {
             <h1>Hi, I'm a React App</h1>
             <p className={classes.join(' ')}>This is really working!</p>
             <button 
-              style={style}
+              className={btnClass}
               onClick={this.togglePersonsHandler}>Toggle Persons List</button>
             {
               // this.state.showPersons ? persons : null
