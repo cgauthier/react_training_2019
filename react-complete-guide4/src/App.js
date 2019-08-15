@@ -27,6 +27,12 @@ import React, { Component } from 'react';
 */              
 import cls from './App.css';
 import Person from './Person/Person';
+// A React 16+ feature, ErrorBoundary
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+// higher order components wrap around other components, for example ErrorBoundary is a higher order component
+// ErrorBoundary is effective with a build, not in development mode
+// Use ErrorBoundary only in areas where you may not always be in control of code expectation
+// for example AJAX calls may fail for some reasons....
 
 class App extends Component {
 
@@ -132,31 +138,32 @@ class App extends Component {
     // adding key allows react to compare what was with what's coming in its virtual DOM
     // to ensure it only modifies what changed, making it more efficient
     // key should be unique
+
+    // moved the person.id key to the ErrorBoundary, because in iterated items
+    // the key must be in the outermost element being repeated.
     if(this.state.showPersons) {
       persons = (
         <div> 
           {this.state.persons.map((person, index) => {
             if(person.children) {
-              return <Person 
+              return <ErrorBoundary key={person.id}><Person 
                 click={(event) => this.deletePersonHandler(event, index)}
-                key={person.id}
                 name={person.name} 
                 changed={(event) => this.nameChangeHandler(event, person)}
-                age={person.age}>{person.children}</Person>
+                age={person.age}>{person.children}</Person></ErrorBoundary>
             } else {
-              return <Person 
+              return <ErrorBoundary key={person.id}><Person 
                 click={(event) => this.deletePersonHandler(event, index)}
-                key={person.id}
                 changed={(event) => this.nameChangeHandler(event, person)}
                 name={person.name} 
-                age={person.age}/>
+                age={person.age}/></ErrorBoundary>
             }
           })}
         </div>
       );
 
       btnClass = cls.red;
-      
+
 
 
     } 

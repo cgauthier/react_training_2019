@@ -20,6 +20,13 @@ const person = (props) => {
     // anything inside 'tags' are props.children
     const withChildren = (props.children) ? <p>{props.children}</p> : null;
 
+    // testing as part of dealing with React JS 16.+ Error Boundaries
+    const rnd = Math.random();
+
+    if(rnd > 0.7) {
+        throw new Error("Something is not working anymore...");
+    }
+
     return (
         <div className={cls.Person} onClick={props.click}>
             <p>I'm {props.name} and I am {props.age} years old!</p>
