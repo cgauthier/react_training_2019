@@ -99,13 +99,13 @@ class App extends Component {
             changed={this.nameChangeHandler} />
         </div>
       );
-
     } 
 
     return (
         <div className={cls.App}>
           <header className="App-header">
             <Cockpit  
+              title={this.props.appTitle}
               persons={this.state.persons} 
               clicked={this.togglePersonsHandler}
               showPersons={this.state.showPersons}
