@@ -8,29 +8,58 @@
 // shouldComponentUpdate
 // componentDidUpdate
 
-
+// ************************
 // component creation
+// ************************
 
 // 1) constructor (default ES6 class feature, it receives the props and call super(props) for your own logic)
 //    set initialState
 //    do not use for http requests
 //    no async calls or impact performance like unnecesary re-render cyvles
 
-// 2) static getDerivedStateFromProps (since React 16.3)
+// 2) static getDerivedStateFromProps(props, state) (since React 16.3)
 //    whenever your props change for your class, you can sync your state to them
 //    do not use for http requests
 //    very rare niche case
 
-// 3) render
+// 3) render()
 //    no async in here
 
 // 4) child component will now render
 
-// 5) componentDidMount (this is where the call is made when child components are rendered)
+// 5) componentDidMount() (this is where the call is made when child components are rendered)
 //    use this to call an http request
 //    do not call setState because you can use this async
 
 // componentWillMount is something which will be deprecated in future releases // use constructor to set state instead
+
+
+// ************************
+// component update
+// ************************
+
+// 1) static getDerivedStateFromProps(props, state) (since React 16.3)
+//    whenever your props change for your class, you can sync your state to them
+//    do not use for http requests
+//    this is rarely need this, better ways of doing this 
+
+// 2) shouldComponentUpdate(nextProps, nextState) 
+//    you can decide to cancel or continue the process
+//    
+
+// 3) render()
+
+// 4) update all child components
+
+// 5) getSnapshotBeforeUpdate(prevProps, prevState)
+//    get current scrolling position or other DOM info you need to query and perhaps restore back using the prev data
+//    so you have data before update, the update gets done and then this data can be used
+
+// 6) componentDidUpdate()
+//    done with the updating
+//    here we can make an http request.
+//    you have to watch out for infinite loop when making async requests
+//    don't do the update with setState with a promise, because that will lead to uncessary re-rendering
 
 
 import React, { Component } from 'react';
@@ -71,15 +100,36 @@ class App extends Component {
     return state;
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js]: shouldComponentUpdate');
+    return true;
+  }
+  
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    console.log('[App.js]: getSnapshotBeforeUpdate');
+    return null;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('[App.js]: getSnapshotBeforeUpdate');
+  }
+
   componentDidMount() {
     console.log('[App.js]: componentDidMount');
   }
 
   // in React 16.8, this will cause a warning message
   // we should be using the constructor to set state instead.
+
   // componentWillMount() {
   //   console.log('[App.js]: componentWillMount');
   // }
+
+  // this is something older and it is unsafe
+  // componentWillReceiveProps(props) {
+  //   console.log('[Persons.js]: componentWillReceiveProps', props);
+  // }
+
 
   switchNameHandler = (newName) => {
     this.setState( {persons: [{
