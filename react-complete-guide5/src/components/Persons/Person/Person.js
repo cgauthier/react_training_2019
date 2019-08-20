@@ -4,6 +4,7 @@ import cls from './Person.css';
 
 const person = (props) => {
     
+    console.log('[Person.js]: rendering...');
     const withChildren = (props.children) ? <p>{props.children}</p> : null;
 
     return (

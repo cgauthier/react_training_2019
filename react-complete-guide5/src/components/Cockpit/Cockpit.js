@@ -5,8 +5,6 @@ const cockpit = (props) => {
 
     const assignedClasses = [];
 
-    console.log(props.persons.length)
-
     let btnClass = '';
     if(props.showPersons) {
         btnClass = classes.Red;
@@ -17,8 +15,6 @@ const cockpit = (props) => {
     if(props.persons.length <= 1) {
         assignedClasses.push(classes.bold);
     } 
-
-    console.log(assignedClasses.join(" "));
 
     return (
         <div className={classes.Cockpit}>

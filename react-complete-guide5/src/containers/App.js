@@ -1,3 +1,37 @@
+// component lifecycle are only available in class based components (container)
+// lifecycle hooks are not to be confused with React Hooks
+// React Hooks are new and are related to functional components only.
+
+// getSnapshotBeforeUpdate
+// componentDidCatch
+// componentWillMount
+// shouldComponentUpdate
+// componentDidUpdate
+
+
+// component creation
+
+// 1) constructor (default ES6 class feature, it receives the props and call super(props) for your own logic)
+//    set initialState
+//    do not use for http requests
+//    no async calls or impact performance like unnecesary re-render cyvles
+
+// 2) static getDerivedStateFromProps (since React 16.3)
+//    whenever your props change for your class, you can sync your state to them
+//    do not use for http requests
+//    very rare niche case
+
+// 3) render
+//    no async in here
+
+// 4) child component will now render
+
+// 5) componentDidMount (this is where the call is made when child components are rendered)
+//    use this to call an http request
+//    do not call setState because you can use this async
+
+// componentWillMount is something which will be deprecated in future releases // use constructor to set state instead
+
 
 import React, { Component } from 'react';
 import cls from './App.css';
@@ -6,23 +40,46 @@ import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
 
-  state = {
-    persons: [{
-      id: "person_1",
-      name: "Claude",
-      age: 53
-    }, {
-      id: "person_2",
-      name: "Nicole",
-      age: 40
-    }, {
-      id: "person_3",
-      name: "Schnookums",
-      age: 7,
-      children: "I'm a dog!"
-    }],
-    showPersons: false
+
+  constructor(props) {
+    super(props);
+    console.log('[App.js]: constructor');
+    // initialize your state here and there is no setState available here in the constructor.. 
+    this.state = {
+      persons: [{
+        id: "person_1",
+        name: "Claude",
+        age: 53
+      }, {
+        id: "person_2",
+        name: "Nicole",
+        age: 40
+      }, {
+        id: "person_3",
+        name: "Schnookums",
+        age: 7,
+        children: "I'm a dog!"
+      }],
+      showPersons: false
+    }
   }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log('[App.js]: getDerivedStateFromProps', props);
+    // return the updated state 
+    // for this demo, nothing is updated
+    return state;
+  }
+
+  componentDidMount() {
+    console.log('[App.js]: componentDidMount');
+  }
+
+  // in React 16.8, this will cause a warning message
+  // we should be using the constructor to set state instead.
+  // componentWillMount() {
+  //   console.log('[App.js]: componentWillMount');
+  // }
 
   switchNameHandler = (newName) => {
     this.setState( {persons: [{
@@ -76,19 +133,10 @@ class App extends Component {
   }
 
   render() {
-
-    const style = {
-      backgroundColor: "white",
-      font: "inherit",
-      border: "1px solid blue",
-      padding: "8px",
-      color: "black",
-      fontSize: "bold",
-      cursor: "pointer"
-    };
-
-    let persons = null;
     
+    console.log('[App.js]: render');
+    
+    let persons = null;
     
     if(this.state.showPersons) {
       persons = (
