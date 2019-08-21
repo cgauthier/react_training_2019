@@ -13,8 +13,13 @@ class Persons extends Component {
   // }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log('[Persons.js]: shouldComponentUpdate');
-    return true;
+
+    // this comparison works because we do copies in App.js of our state objects
+    // without that, this would not work here because these are shallow compare and as such the comparing of pointers, not values
+    var shouldUpdate = (nextProps.persons !== this.props.persons);
+    console.log('[Persons.js]: shouldComponentUpdate: ' + shouldUpdate);
+    return shouldUpdate;
+    
   }
   
   getSnapshotBeforeUpdate(prevProps, prevState) {
