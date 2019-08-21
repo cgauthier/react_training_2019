@@ -89,7 +89,8 @@ class App extends Component {
         age: 7,
         children: "I'm a dog!"
       }],
-      showPersons: false
+      showPersons: false,
+      showCockpit: true
     }
   }
 
@@ -100,18 +101,9 @@ class App extends Component {
     return state;
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log('[App.js]: shouldComponentUpdate');
-    return true;
-  }
-  
   getSnapshotBeforeUpdate(prevProps, prevState) {
     console.log('[App.js]: getSnapshotBeforeUpdate');
     return null;
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log('[App.js]: getSnapshotBeforeUpdate');
   }
 
   componentDidMount() {
@@ -183,6 +175,10 @@ class App extends Component {
     this.setState(newState);
   }
 
+  toggleCockpitHandler = (event) => {
+    this.setState({showCockpit: !this.state.showCockpit});
+  }
+
   deletePersonHandler = (event, personIndex) => {
     console.log(event.target.type);
     if(event.target.type === undefined) {
@@ -212,12 +208,15 @@ class App extends Component {
     return (
         <div className={cls.App}>
           <header className="App-header">
+            <button onClick={this.toggleCockpitHandler}>Remove Cockpit</button>
+            {this.state.showCockpit ? 
             <Cockpit  
               title={this.props.appTitle}
               persons={this.state.persons} 
               clicked={this.togglePersonsHandler}
               showPersons={this.state.showPersons}
-            />            
+            />         
+             : null}   
             {persons}
           </header>
         </div>

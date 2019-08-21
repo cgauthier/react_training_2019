@@ -38,6 +38,11 @@ class Persons extends Component {
   }
 
 
+  // cleaning up code when something is removed
+  componentWillUnmount() {
+    console.log('[Persons.js]: componentWillUnmount');
+  }
+
   render() {
     console.log('[Persons.js]: rendering...');
     return (
