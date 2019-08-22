@@ -1,7 +1,9 @@
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
 import Person from './Person/Person';
 
-class Persons extends Component {
+//
+// class Persons extends Component {
+class Persons extends PureComponent {
 
   // since we don't have an actual state
   // we should not use this
@@ -13,16 +15,26 @@ class Persons extends Component {
   // }
 
   // only available in class based components.
+  // being commmented out, because we are using PureComponent
+  /*
   shouldComponentUpdate(nextProps, nextState) {
 
     // this comparison works because we do copies in App.js of our state objects
     // without that, this would not work here because these are shallow compare and as such the comparing of pointers, not values
-    var shouldUpdate = (nextProps.persons !== this.props.persons);
+    // var shouldUpdate = (nextProps.persons !== this.props.persons);
+    var shouldUpdate = false;
+    if(
+        nextProps.persons !== this.props.persons ||
+        nextProps.changed !== this.props.changed ||
+        nextProps.clicked !== this.props.clicked
+      ) {
+        shouldUpdate = true;
+      }
     console.log('[Persons.js]: shouldComponentUpdate: ' + shouldUpdate);
     return shouldUpdate;
     
   }
-  
+  */
   getSnapshotBeforeUpdate(prevProps, prevState) {
     console.log('[Persons.js]: getSnapshotBeforeUpdate');
     // return null;

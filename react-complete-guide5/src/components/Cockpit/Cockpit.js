@@ -93,3 +93,5 @@ const Cockpit = (props) => {
 // we can see changes only affecting a local area of where the text field is typed and in context with...
 export default React.memo(Cockpit);
 // export default Cockpit;
+
+

@@ -227,3 +227,20 @@ class App extends Component {
 }
 
 export default App;
+
+
+
+
+// When should we update?
+
+// Using shouldComponentUpdate or React.memo should be done selectively.
+// either do take some computing cycle, therefore
+// when you know a child parent is always going to be updated
+// no point in using either doing checks, it will hinder performance
+
+
+// when you always need to check all props automatically
+// instead of using shouldComponentUpdate
+// extend PureComponent
+// it will automatically imply a shouldComponentUpdate on all props
+// see that being extended in Persons.js
