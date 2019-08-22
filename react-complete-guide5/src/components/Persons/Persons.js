@@ -12,6 +12,7 @@ class Persons extends Component {
   //   return state;
   // }
 
+  // only available in class based components.
   shouldComponentUpdate(nextProps, nextState) {
 
     // this comparison works because we do copies in App.js of our state objects

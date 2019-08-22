@@ -58,10 +58,12 @@ const Cockpit = (props) => {
     if(props.showPersons) {
         btnClass = classes.Red;
     }
-    if(props.persons.length <= 2) {
+    // if(props.persons.length <= 2) {
+    if(props.personsLength <= 2) {        
         assignedClasses.push(classes.red);
     }
-    if(props.persons.length <= 1) {
+    // if(props.persons.length <= 1) {
+    if(props.personsLength <= 1) {        
         assignedClasses.push(classes.bold);
     } 
 
@@ -77,4 +79,17 @@ const Cockpit = (props) => {
 
 }
 
-export default Cockpit;
+// React.memo works with functional compponents
+// wrapping Cockpit with React.memo will 
+// wrap the Component with a memoization algorithm.
+// the memoization will allow for increase performance
+// over time by eliminating unnecessary update operations.
+// this is based on the props we pass in their pure sense
+// in the above we will be passsing to the Cockpit, the props.persons.length
+// to trigger memoization
+// this can be tested when we type into the person's text field
+// without React.memo everything gets re-rendered and this can be also seen in the console.log by triggering useEffect(s)
+// but with React.memo and checking for the lenght of the props.personsLength directly
+// we can see changes only affecting a local area of where the text field is typed and in context with...
+export default React.memo(Cockpit);
+// export default Cockpit;
