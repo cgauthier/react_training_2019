@@ -1,7 +1,13 @@
-import React, {Component} from 'react';
+// import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import './Person.css';
-import Auxiliary from '../../../hoc/Auxiliary';
+// import Auxiliary from '../../../hoc/Auxiliary';
 import cls from './Person.css';
+
+// React.Fragment can replace Auxiliary in this example
+// we can import it like this
+// import React, {Component, Fragment} from 'react';
+// and use it in a tag to replace Auxiliary
 
 class Person extends Component {
 
@@ -43,13 +49,15 @@ class Person extends Component {
 
         // this is really React.createElement behind the scenes when Auxiliary is evaluated
         return (
-            <Auxiliary> 
+            // <Auxiliary> 
+              <Fragment>
               <div className={cls.Person} onClick={this.props.click}>
                   <p>I'm {this.props.name} and I am {this.props.age} years old!</p>
                   {withChildren}
                   <input type="text" onChange={this.props.changed} defaultValue={this.props.name}/>
               </div>
-            </Auxiliary>
+             </Fragment>
+             // </Auxiliary>
         )        
 
 
