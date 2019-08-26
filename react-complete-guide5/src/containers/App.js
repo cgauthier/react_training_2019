@@ -2,12 +2,6 @@
 // lifecycle hooks are not to be confused with React Hooks
 // React Hooks are new and are related to functional components only.
 
-// getSnapshotBeforeUpdate
-// componentDidCatch
-// componentWillMount
-// shouldComponentUpdate
-// componentDidUpdate
-
 // ************************
 // component creation
 // ************************
@@ -230,7 +224,6 @@ export default App;
 
 
 
-
 // When should we update?
 
 // Using shouldComponentUpdate or React.memo should be done selectively.
@@ -244,3 +237,20 @@ export default App;
 // extend PureComponent
 // it will automatically imply a shouldComponentUpdate on all props
 // see that being extended in Persons.js
+
+
+
+// the render() method does not render the actual DOM
+// instead, it is a call to process and have React determine what to update
+
+/* 
+  1) shouldComponentUpdate() <-- this may prevent a render() call
+  2) render() - this will now determine if there are changes to be pushed to the Real DOM as it compares changes to the Virtual DOM
+              - the name "render" is basically confusing as it really is more of a function that determines if rendering is required to the real DOM
+              - VirtualDOM is basically a copy of the DOM accessible to JavaScript, much faster to parse and compare
+                the 'verdict' from using the VirtualDOM is to determine if we do need to update the real DOM and then
+                to try and update only as little as possible
+    - React actually keeps 2 copies of the Virtual DOM as old future DOM and an internally re-rendering a new "FUTURE" Virtual DOM.
+    - it will compare both copies and decide if the REAL browser DOM needs updating and do it as efficiently as possible by only updating areas that require it
+    
+*/
