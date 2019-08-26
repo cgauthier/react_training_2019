@@ -4,6 +4,8 @@ import './Person.css';
 // import Auxiliary from '../../../hoc/Auxiliary';
 import cls from './Person.css';
 import withClass from '../../../hoc/WithClass';
+import PropTypes from 'prop-types';
+
 
 // React.Fragment can replace Auxiliary in this example
 // we can import it like this
@@ -88,6 +90,22 @@ class Person extends Component {
         // )
     }
 }
+
+
+
+      // prop-types safe 
+      // npm install --save props-types
+      // will warn in dev mode
+      // useful to ensure better integrity of your code
+      // also useful when building a component library to distribute
+      // test this by breaking it, change an age value from number to string in App.js
+  Person.propTypes = {
+    click: PropTypes.func,
+    name: PropTypes.string,
+    age: PropTypes.number,
+    changed: PropTypes.func
+  };
+
 
 // export default Person;
 
