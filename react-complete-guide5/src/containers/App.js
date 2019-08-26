@@ -60,7 +60,10 @@ import React, { Component } from 'react';
 import cls from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
-import WithClass from '../hoc/WithClass';
+// import WithClass from '../hoc/WithClass';
+// adding Auxiliary to use the modified WithClass hoc
+import Auxiliary from '../hoc/Auxiliary';
+import withClass from '../hoc/WithClass';
 
 class App extends Component {
 
@@ -201,7 +204,8 @@ class App extends Component {
     } 
 
     return (
-        <WithClass classes={cls.App}>
+        // <WithClass classes={cls.App}>
+        <Auxiliary>
           <header className="App-header">
             <button onClick={this.toggleCockpitHandler}>Remove Cockpit</button>
             {this.state.showCockpit ? 
@@ -215,13 +219,15 @@ class App extends Component {
              : null}   
             {persons}
           </header>
-        </WithClass>
+        </Auxiliary>
+        // </WithClass>
     );
   
   }
 }
 
-export default App;
+// export default App;
+export default withClass(App, cls.App);
 
 
 
