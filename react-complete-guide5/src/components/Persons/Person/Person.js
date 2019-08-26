@@ -34,15 +34,34 @@ class Person extends Component {
 
     render() {
         console.log('[Person.js]: rendering...');
-        const withChildren = (this.props.children) ? <p>{this.props.children}</p> : null;
+        const withChildren = (this.props.children) ? <p key='i3' >{this.props.children}</p> : null;
     
-        return (
-            <div className={cls.Person} onClick={this.props.click}>
-                <p>I'm {this.props.name} and I am {this.props.age} years old!</p>
-                {withChildren}
-                <input type="text" onChange={this.props.changed} defaultValue={this.props.name}/>
-            </div>
-        )
+        // REACT can return adjacent JSX elements
+        // as long as we use the 'key' property and the items are in an array
+        // in this example.
+        // we will put the elements below in an array and create a unique key
+        // one of the reasons for this is to avoid being forced to use a 'wrapper' tag
+        // this reduces the HTML generated
+
+        // using key
+        // since this is an array, we must use the comma operator to separate the items
+
+        return [
+          <div key='i1' className={cls.Person} onClick={this.props.click}>,
+              <p key='i2' >I'm {this.props.name} and I am {this.props.age} years old!</p>,
+              {withChildren},
+              <input key='i4' type="text" onChange={this.props.changed} defaultValue={this.props.name}/>,
+          </div>
+        ];
+
+        // original
+        // return (
+        //     <div className={cls.Person} onClick={this.props.click}>
+        //         <p>I'm {this.props.name} and I am {this.props.age} years old!</p>
+        //         {withChildren}
+        //         <input type="text" onChange={this.props.changed} defaultValue={this.props.name}/>
+        //     </div>
+        // )
     }
 }
 
