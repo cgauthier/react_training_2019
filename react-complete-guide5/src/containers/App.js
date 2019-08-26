@@ -88,7 +88,8 @@ class App extends Component {
         children: "I'm a dog!"
       }],
       showPersons: false,
-      showCockpit: true
+      showCockpit: true,
+      changeCounter: 0
     }
   }
 
@@ -161,8 +162,24 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons[personIndex] = personConst;
 
-    this.setState( {persons: persons});
+    // this.setState( {persons: persons});
   
+    // wrong way
+    // the state changes asynchronously 
+    // the entire this.state is not guaranteed to be current when the operation is happening
+    // this.setState( {
+    //   persons: persons, 
+    //   changeCounter: this.state.changeCounter + 1
+    // });
+
+    // right way
+    // this callback will be correct and guaranteed when you must accurately depend on a previous State
+    this.setState((prevState, props) => {
+      return {
+        persons: persons, 
+        changeCounter: prevState.changeCounter + 1
+      }
+    })
   }
 
   togglePersonsHandler = (event) => {
