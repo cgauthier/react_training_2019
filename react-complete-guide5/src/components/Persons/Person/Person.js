@@ -3,6 +3,7 @@ import React, {Component, Fragment} from 'react';
 import './Person.css';
 // import Auxiliary from '../../../hoc/Auxiliary';
 import cls from './Person.css';
+import withClass from '../../../hoc/WithClass';
 
 // React.Fragment can replace Auxiliary in this example
 // we can import it like this
@@ -88,7 +89,10 @@ class Person extends Component {
     }
 }
 
-export default Person;
+// export default Person;
+
+// exporting with our dynamic props
+export default withClass(Person, cls);
 
 // was a functional component, now a container/class component
 

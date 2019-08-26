@@ -15,13 +15,16 @@ import React from 'react';
 // complex HOC
 // will be using Auxiliary to provide link
 // use this form when you need behind the scene logic
+
+
+// we are now adding dynamic props to our WrappedComponent.
 const withClass = (WrappedComponent, className) => {
 
     return (props) => {
 
         return (
             <div className={className} >
-                <WrappedComponent />
+                <WrappedComponent {...props}/>
             </div>
         )
     };
