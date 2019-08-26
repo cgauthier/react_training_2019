@@ -60,6 +60,7 @@ import React, { Component } from 'react';
 import cls from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import WithClass from '../hoc/WithClass';
 
 class App extends Component {
 
@@ -200,7 +201,7 @@ class App extends Component {
     } 
 
     return (
-        <div className={cls.App}>
+        <WithClass classes={cls.App}>
           <header className="App-header">
             <button onClick={this.toggleCockpitHandler}>Remove Cockpit</button>
             {this.state.showCockpit ? 
@@ -214,7 +215,7 @@ class App extends Component {
              : null}   
             {persons}
           </header>
-        </div>
+        </WithClass>
     );
   
   }
