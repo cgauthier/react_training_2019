@@ -22,7 +22,17 @@ class Person extends Component {
     //     // for this demo, nothing is updated
     //     return state;
     //   }
+
     
+    // Since React 16.3 we can also use createRef 
+    // causing errors in 16.8 with componentWillUnmount
+
+    // constructor(props) {
+    //     super(props);
+    //     this.inputElRef = React.createRef();
+    // }
+
+
       shouldComponentUpdate(nextProps, nextState) {
         console.log('[Person.js]: shouldComponentUpdate');
         return true;
@@ -39,6 +49,9 @@ class Person extends Component {
     
       componentDidMount() {
         console.log('[Person.js]: componentDidMount');
+        this.inputEl.focus();
+        // React 16.3
+        // this.inputElRef.focus();
       }
     
 
@@ -51,18 +64,26 @@ class Person extends Component {
         // to return HTML without a wrapper
 
         // this is really React.createElement behind the scenes when Auxiliary is evaluated
+
+
+        // working with ref
+        // this works correctly everywhere        
         return (
             // <Auxiliary> 
               <Fragment>
               <div className={cls.Person} onClick={this.props.click}>
                   <p>I'm {this.props.name} and I am {this.props.age} years old!</p>
                   {withChildren}
-                  <input type="text" onChange={this.props.changed} defaultValue={this.props.name}/>
+                  <input 
+                    type="text" 
+                    ref={(el) => {this.inputEl = el}}
+                    // ref={this.inputElRef} 
+                    onChange={this.props.changed} 
+                    defaultValue={this.props.name}/>
               </div>
              </Fragment>
              // </Auxiliary>
         )        
-
 
         // REACT can return adjacent JSX elements
         // as long as we use the 'key' property and the items are in an array
@@ -92,13 +113,13 @@ class Person extends Component {
 }
 
 
-
       // prop-types safe 
       // npm install --save props-types
       // will warn in dev mode
       // useful to ensure better integrity of your code
       // also useful when building a component library to distribute
       // test this by breaking it, change an age value from number to string in App.js
+
   Person.propTypes = {
     click: PropTypes.func,
     name: PropTypes.string,
