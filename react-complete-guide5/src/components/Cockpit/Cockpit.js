@@ -3,13 +3,19 @@
 // the useEffect hook would not work without modifying
 // from const cockpit to const Cockpit.
 
-import React,  { useEffect } from 'react';
+import React,  { useEffect, useRef } from 'react';
 import classes from './Cockpit.css';
 
 const Cockpit = (props) => {
 
+    const toggleButtonRef = useRef(null);
+
+    // using useEffect to call click on toggleButtonRef
+
     useEffect(() => {
         console.log("[Cockpit.js]: useEffect");
+
+        toggleButtonRef.current.click();
 
         const timer = setTimeout(() => {
             alert('Saved data to cloud');
@@ -31,6 +37,8 @@ const Cockpit = (props) => {
     // if more than one field, then pass an array of them for the same effect
 
     // can have more than one useEffect
+
+    
     useEffect(() => {
         console.log("[Cockpit.js]: useEffect");
 
@@ -72,8 +80,9 @@ const Cockpit = (props) => {
         <h1>{props.title}</h1>
         <p className={assignedClasses.join(' ')}>This is really working!</p>
         <button 
-          className={btnClass}
-          onClick={props.clicked}>Toggle Persons List</button>
+            ref={toggleButtonRef}
+            className={btnClass}
+            onClick={props.clicked}>Toggle Persons List</button>
         </div>
     );
 
